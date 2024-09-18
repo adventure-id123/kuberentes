@@ -1,0 +1,44 @@
+1) Create one pod with one container
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: devops
+spec:
+  containers:
+    - name: signup
+      image: ubuntu
+      command: ["/bin/bash","-c","while true; do echo signup; sleep 2; done"]
+
+
+2) Create one pod with two container 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: devops
+spec:
+  containers:
+    - name: signup
+      image: ubuntu
+      command: ["/bin/bash","-c","while true; do echo signup; sleep 2; done"]
+    - name: login
+      image: ubuntu
+      command: ["/bin/bash","-c","while true; do echo login; sleep 2; done"]
+
+3) Create one pod with one container with the image name called nginx and access
+   that container through pod ip
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flipkart
+spec:
+  containers:
+    - name: webapp
+      image: nginx
+      ports:
+        - containerPort: 80
+
+
