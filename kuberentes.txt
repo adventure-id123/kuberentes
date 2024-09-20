@@ -41,4 +41,75 @@ spec:
       ports:
         - containerPort: 80
 
+4) Create one pod with one container using labels 
+------Label Selector--------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: devops
+  labels:
+    team: skypers
+    dept: devOps
+spec:
+  containers:
+    - name: webapp
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo webapp; sleep 1; done" ]
+
+
+5) create one pod with one container using Replicationcontroller
+---------------------ReplicationController---------------------
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: flipkart
+spec:
+  replicas: 2
+  selector:
+    app: httpd
+  template:
+    metadata:
+      name: webapp
+      labels:
+        app: httpd
+    spec:
+      containers:
+        - name: signup
+          image: httpd
+          ports:
+            - containerPort: 80
+
+
+6) Create one pod with one container using ReplicaSet
+--------------------------------ReplicaSet---------------
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: flipkart
+spec:
+  replicas: 2
+  selector:
+    matchExpressions:
+      - {key: myname, operator: In, values: [signup, login, logout]}
+      - {key: env, operator: NotIn, values: [proserver]}
+  template:
+    metadata:
+      name: webapp
+      labels:
+        myname: signup
+    spec:
+      containers:
+        - name: signup
+          image: ubuntu
+          command: ["/bin/bash", "-c", "while true; do echo signup; sleep 1; done"]
+
+
+Steps:
+kubectl
+
+
+
+
 
