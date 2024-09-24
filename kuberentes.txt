@@ -106,8 +106,103 @@ spec:
           command: ["/bin/bash", "-c", "while true; do echo signup; sleep 1; done"]
 
 
-Steps:
-kubectl
+23-09-2024 notes
+Today Kubernetes 
+
+Deployment Object v2 script
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flipkart
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: deployment
+  template:
+    metadata:
+      name: signup
+      labels:
+        name: deployment
+    spec:
+      containers:
+        - name: signup-v2
+          image: centos
+          command: ["/bin/bash", "-c", "while true; do echo v2; sleep 1; done"]
+
+__________________________________________________________________________________________________
+
+2 nd Communication  half Script
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: amazon
+spec:
+  containers:
+    - name: signup
+      image: amazonlinux
+      command: ["/bin/bash", "-c", "while true; do echo hiii; sleep 1; done"]
+    - name: login
+      image: nginx
+      ports:
+        - containerPort: 80
+________________________________________________________________________________________________
+
+Communication with pods
+1st Pod
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+spec:
+  containers:
+    - name: httpd
+      image: httpd
+      ports:
+        - containerPort: 80
+        
+2nd Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+_____________________________________________________________________________________________________
+
+deploy v1 script
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flipkart
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: deployment
+  template:
+    metadata:
+      name: signup
+      labels:
+        name: deployment
+    spec:
+      containers:
+        - name: signup-v1
+          image: ubuntu
+          command: ["/bin/bash", "-c", "while true; do echo v1; sleep 1; done"]
+
+
+
+
+
 
 
 
