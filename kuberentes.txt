@@ -200,6 +200,128 @@ spec:
           command: ["/bin/bash", "-c", "while true; do echo v1; sleep 1; done"]
 
 
+-----24-09-2024
+
+1)---------Cluset IP------
+Deployment object using cluster Ip
+
+A) vi deploy.yml
+B) vi service.yml
+
+
+
+A) vi deploy.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flipkart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deployment
+  template:
+    metadata:
+      labels:
+        name: deployment
+    spec:
+      containers:
+      - name: signup
+        image: httpd
+        ports:
+        - containerPort: 80
+B) vi service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: flipkartsignup
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    name: deployment
+  type: ClusterIP
+
+
+
+--------------------2-  NODE POrt-----------------------
+same deploy should be used and service we need to change Nodeport
+
+---cluster IP-----to -----------Nodeport
+apiVersion: v1
+kind: Service
+metadata:
+  name: flipkartsignup
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    name: deployment
+  type: NodePort
+
+
+3----------------------LoaBalancer-------------------
+
+same deploy should be used and service we need to change to LoadBalancer
+
+type:LoadBalancer
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flipkartsignup
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    name: deployment
+  type: NodePort
+
+
+4) Deployment on Reactjs,python,django ,Apllication by Dockeris=zing abd deployed into kubernetes cluster
+
+--------------Deploy-------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: mynote
+spec:
+   replicas: 1
+   selector:
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: sakshetty
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: notebook
+          image: sakit333/mynote:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8000
+
+----------------------Service-------------
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flipkartsignup
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  selector:
+    name: deployment
+  type: LoadBalancer
+
+
 
 
 
