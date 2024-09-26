@@ -323,8 +323,69 @@ spec:
 
 
 
+------------------------------------------26-09-2024----------------
 
 
+Secret and ConfigMap
+
+ConfigMap
+vi pod.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myconfig
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo welcome; sleep 2 ; done"]
+    volumeMounts:
+      - name: testconfigmap
+        mountPath: "/tmp/config"
+  volumes:
+  - name: testconfigmap
+    configMap:
+       name: mymap
+       items:
+       - key: sample.conf
+         path: sample.conf
+_____________________________________________________________________________________________________________________________
+
+secrete.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysecret
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo welcome to devops; sleep 5 ; done"]
+    volumeMounts:
+      - name: testsecret
+        mountPath: "/tmp/mysecrets"
+  volumes:
+  - name: testsecret
+    secret:
+       secretName: mysecret
+________________________________________________________________________________________________________________________________
+
+sample.config , username.txt , password.txt u should cretae with a rough data
+
+____________________________________________________________________________________________________________________
+
+Namespace
+
+ns.yml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: dev
+   labels:
+     name: dev
 
 
 
